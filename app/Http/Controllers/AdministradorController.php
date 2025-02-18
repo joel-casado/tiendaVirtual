@@ -40,4 +40,9 @@ class AdministradorController extends Controller
         Auth::logout();
         return redirect('/loginAdmin');
     }
+    public function dashboard()
+    {
+        return view('admin');
+    }
+
 }

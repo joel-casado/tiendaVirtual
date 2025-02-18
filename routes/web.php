@@ -16,6 +16,5 @@ Route::post('/loginAdmin', [AdministradorController::class, 'login']);
 Route::post('/logout', [AdministradorController::class, 'logout'])->name('logout');
 
 // Ruta de bienvenida tras el login
-Route::get('/dashboard', function () {
-    return 'Bienvenido al sistema';
-})->middleware('auth');
+Route::get('/dashboard', [AdministradorController::class, 'dashboard'])->middleware('auth');
+
