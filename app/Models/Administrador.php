@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Administrador extends Authenticatable
 
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $table = 'administradores';
 
@@ -24,4 +24,8 @@ class Administrador extends Authenticatable
     protected $fillable = ['usuario', 'password']; // Campos permitidos
 
     protected $hidden = ['password']; // Oculta la contraseña en las respuestas JSON
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

@@ -18,3 +18,6 @@ Route::post('/logout', [AdministradorController::class, 'logout'])->name('logout
 // Ruta de bienvenida tras el login
 Route::get('/dashboard', [AdministradorController::class, 'dashboard'])->middleware('auth');
 
+Route::get('/views/cambiarContraseña', [AdministradorController::class, 'showChangePasswordForm'])->middleware('auth');
+
+Route::post('/views/cambiarContraseña', [AdministradorController::class, 'cambiarPassword'])->middleware('auth');

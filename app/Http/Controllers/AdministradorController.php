@@ -44,5 +44,30 @@ class AdministradorController extends Controller
     {
         return view('admin');
     }
+    public function cambiarPassword(Request $request)
+    {
+        $request->validate([
+            'password_actual' => 'required',
+            'password_nuevo' => 'required|min:8|confirmed',
+        ]);
+
+        $admin = Auth::user(); // Obtener el administrador autenticado
+
+        // Verificar si la contraseña actual es correcta
+        if (!Hash::check($request->password_actual, $admin->password)) {
+            return back()->withErrors(['password_actual' => 'La contraseña actual es incorrecta']);
+        }
+
+        // Actualizar la contraseña
+        $admin->password = bcrypt($request->password_nuevo);
+        $admin->save();
+
+        return back()->with('success', 'Contraseña cambiada correctamente');
+    }
+    public function showChangePasswordForm()
+    {
+        return view('cambiarContraseña'); // Laravel buscará el archivo en resources/views/
+    }
+
 
 }

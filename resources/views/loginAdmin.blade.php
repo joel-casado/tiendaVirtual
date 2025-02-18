@@ -20,5 +20,8 @@
             <input type="password" name="password" id="password">
             <input type="submit" value="Entrar">
         </form>
+        <p>
+            <a href="{{ url('/views/cambiarContraseña') }}">¿Olvidaste tu contraseña?</a>
+        </p>
     </body>
 </html>
