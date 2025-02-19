@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdministradorController;
+use App\Http\Controllers\CategoriaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,3 +22,7 @@ Route::get('/dashboard', [AdministradorController::class, 'dashboard'])->middlew
 Route::get('/views/cambiarContraseña', [AdministradorController::class, 'showChangePasswordForm'])->middleware('auth');
 
 Route::post('/views/cambiarContraseña', [AdministradorController::class, 'cambiarPassword'])->middleware('auth');
+
+Route::get('/crearCategoria', [CategoriaController::class, 'crear'])->name('crearCategoria');
+
+Route::post('/crearCategoria', [CategoriaController::class, 'guardar'])->name('guardarCategoria');

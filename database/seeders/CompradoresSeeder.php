@@ -13,7 +13,7 @@ class compradoresSeeder extends Seeder
         // Insertar un Administrador
         Administrador::create([
             'usuario' => 'admin',
-            'password' => Hash::make('12345678'), // La contraseña será encriptada
+            'password' => 'admin', // La contraseña será encriptada
         ]);
 
         // Insertar un Comprador
@@ -21,7 +21,7 @@ class compradoresSeeder extends Seeder
             'nombre' => 'Juan',
             'apellidos' => 'Pérez',
             'email' => 'juan@example.com',
-            'password' => Hash::make('12345678'), // Contraseña encriptada
+            'password' => Hash::make('1234'), // Contraseña encriptada
             'telefono' => '1234567890',
             'direccion' => 'Calle Falsa 123, Ciudad X'
         ]);

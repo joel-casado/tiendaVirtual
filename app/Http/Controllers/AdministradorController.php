@@ -18,15 +18,15 @@ class AdministradorController extends Controller
     // Procesar el login
     public function login(Request $request)
     {
+
         // Validar los datos del formulario
         $request->validate([
-            'username' => 'required|string',
+            'usuario' => 'required|string', // CAMBIADO de 'username' a 'usuario'
             'password' => 'required|string',
         ]);
 
         // Intentar autenticar al usuario
-        if (Auth::attempt(['usuario' => $request->username, 'password' => $request->password])) {
-            // Redirigir al dashboard o página de bienvenida
+        if (Auth::attempt(['usuario' => $request->usuario, 'password' => $request->password])) {
             return redirect()->intended('/dashboard');
         }
 
@@ -35,11 +35,16 @@ class AdministradorController extends Controller
     }
 
     // Cerrar sesión
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/loginAdmin');
+
+        $request->session()->invalidate(); // Invalida la sesión
+        $request->session()->regenerateToken(); // Regenera el token CSRF
+
+        return redirect('/loginAdmin'); // Redirige al login
     }
+
     public function dashboard()
     {
         return view('admin');
