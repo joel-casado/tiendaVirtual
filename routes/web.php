@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,3 +27,8 @@ Route::post('/views/cambiarContraseña', [AdministradorController::class, 'cambi
 Route::get('/crearCategoria', [CategoriaController::class, 'crear'])->name('crearCategoria');
 
 Route::post('/crearCategoria', [CategoriaController::class, 'guardar'])->name('guardarCategoria');
+
+Route::get('/crearProducto', [ProductoController::class, 'crear'])->name('crearProducto');
+
+Route::post('/crearProducto', [ProductoController::class, 'guardar'])->name('guardarProducto');
+

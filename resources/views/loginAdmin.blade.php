@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
     <body>
         <!-- Mostrar errores de autenticación -->
@@ -19,9 +20,10 @@
             <label for="password">Contraseña:</label>
             <input type="password" name="password" id="password">
             <input type="submit" value="Entrar">
+            <p>
+                <a href="{{ url('/views/cambiarContraseña') }}">¿Olvidaste tu contraseña?</a>
+            </p>
         </form>
-        <p>
-            <a href="{{ url('/views/cambiarContraseña') }}">¿Olvidaste tu contraseña?</a>
-        </p>
+
     </body>
 </html>
