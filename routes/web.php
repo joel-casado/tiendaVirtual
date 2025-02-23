@@ -1,4 +1,4 @@
-<?php
+a<?php
 
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\CategoriaController;
@@ -32,3 +32,4 @@ Route::get('/crearProducto', [ProductoController::class, 'crear'])->name('crearP
 
 Route::post('/crearProducto', [ProductoController::class, 'guardar'])->name('guardarProducto');
 
+Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');

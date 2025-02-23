@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +9,15 @@ class Producto extends Model
     use HasFactory;
 
     protected $table = 'productos';
+
+    protected $fillable = [
+        'codigo_producto', 'nombre_producto', 'descripcion',
+        'precio', 'id_categoria', 'stock', 'destacado'
+    ];
+
+    protected $casts = [
+        'precio' => 'decimal:2',
+    ];
 
     public function categoria()
     {

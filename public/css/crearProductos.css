@@ -1,36 +1,47 @@
-/* Estilos generales */
+/* Fondo de pantalla completa */
 body {
     font-family: Arial, sans-serif;
     background: url('/images/cocina.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #F8F1E5;
     display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     margin: 0;
+    flex-direction: column;
 }
 
-
-/* Contenedor del formulario */
-.login-container {
-    background-color: rgba(143, 22, 48, 0.9); /* Fondo semi-transparente */
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    width: 300px;
+/* Título */
+h1 {
+    color: #8F1630;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
     text-align: center;
 }
-/* Título */
-h2 {
-    color: #CDA45E;
-    margin-bottom: 20px;
+
+/* Contenedor del formulario */
+.producto-container {
+    background-color: rgba(143, 22, 48, 0.9); /* Fondo semi-transparente */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
 }
 
 /* Inputs */
-input[type="text"],
-input[type="password"] {
-    width: 100%;
+input[type="text"] {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #F8F1E5;
+    color: #2C2C2C;
+}
+input[type="number"] {
+    width: 90%;
     padding: 10px;
     margin: 10px 0;
     border: none;
@@ -39,9 +50,8 @@ input[type="password"] {
     color: #2C2C2C;
 }
 
-/* Botón de login */
-input[type="submit"] {
-    width: 50%;
+/* Botón de creación */
+button {
     background-color: #CDA45E;
     color: #2C2C2C;
     padding: 10px;
@@ -50,27 +60,25 @@ input[type="submit"] {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 50%;
 }
 
-input[type="submit"]:hover {
+button:hover {
     background-color: #B08A50;
 }
-
-/* Enlace de "Olvidaste tu contraseña" */
-a {
-    color: #F8F1E5;
-    text-decoration: none;
-    display: block;
-    margin-top: 10px;
+select {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #F8F1E5;
+    color: #2C2C2C;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
-/* Mensajes de error */
-.error-message {
-    color: #FFD700;
-    font-size: 14px;
+/* Mensajes de éxito */
+.success-message {
+    color: green;
+    font-weight: bold;
     margin-bottom: 10px;
 }

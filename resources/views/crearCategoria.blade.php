@@ -2,28 +2,19 @@
 <html>
 <head>
     <title>Categorias</title>
+    <link rel="stylesheet" href="/css/crearCategoria.css">
 </head>
     <body>
         <h1>Crear categoria</h1>
         @if(session('success'))
-            <p style="color: green;">{{ session('success') }}</p>
+            <p style="color: #8F1630;">{{ session('success') }}</p>
         @endif
-        <form action="{{ url('/crearCategoria') }}" method="POST">
-            @csrf
-
-            <input type="text" name="nombre_categoria">
-            <button type="submit">Crear</button>
-        </form>
-        <form action="{{ url('/crearCategoria') }}" method="POST">
-            @csrf
-            <label></label>
-            <input type="text" name="nombre_categoria">
-            <button type="submit">Crear</button>
-        </form>
-        <form action="{{ url('/crearCategoria') }}" method="POST">
-            <label></label>
-            <input type="text" name="nombre_categoria" >
-            <button type="submit">Crear</button>
-        </form>
+        <div class="categoria-container">
+            <form action="{{ url('/crearCategoria') }}" method="POST">
+                @csrf
+                <input type="text" name="nombre_categoria" placeholder="Nombre de la categoría" required>
+                <button type="submit">Crear</button>
+            </form>
+        </div>
     </body>
 </html>
