@@ -43,6 +43,6 @@
         </table>
     @endif
 
-    <p><a href="{{ url('/dashboard') }}">Volver al panel</a></p>
+    <p><a href="{{ url('/dashboard') }}">Volver</a></p>
 </body>
 </html>

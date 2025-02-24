@@ -1,4 +1,4 @@
-a<?php
+<?php
 
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\CategoriaController;
