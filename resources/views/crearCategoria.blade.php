@@ -15,6 +15,8 @@
                 <input type="text" name="nombre_categoria" placeholder="Nombre de la categoría" required>
                 <button type="submit">Crear</button>
             </form>
+            <p><a href="{{ url('/dashboard') }}">Volver</a></p>
         </div>
+
     </body>
 </html>

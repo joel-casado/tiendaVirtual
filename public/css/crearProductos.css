@@ -67,6 +67,15 @@ button:hover {
     background-color: #B08A50;
 }
 select {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #F8F1E5;
+    color: #2C2C2C;
+}
+input[type="file"] {
     width: 90%;
     padding: 10px;
     margin: 10px 0;
@@ -81,4 +90,8 @@ select {
     color: green;
     font-weight: bold;
     margin-bottom: 10px;
+}
+a {
+    color: #B08A50;
+    font-weight: bold;
 }

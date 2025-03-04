@@ -20,24 +20,28 @@ class ProductoController extends Controller
     // Guardar el producto en la base de datos
     public function guardar(Request $request)
     {
-        // Validación del formulario
         $request->validate([
             'nombre_producto' => 'required|string|max:50',
             'descripcion' => 'nullable|string',
             'precio' => 'required|numeric|min:0.01',
             'id_categoria' => 'required|exists:categorias,id',
             'stock' => 'required|integer|min:0',
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Generar un código único para el producto
         do {
             $codigo = strtoupper(substr($request->nombre_producto, 0, 3)) . rand(100, 999);
         } while (Producto::where('codigo_producto', $codigo)->exists());
 
-        // Convertir precio a decimal correctamente
         $precio = number_format((float)$request->precio, 2, '.', '');
+        $imagenPath = null;
+        if ($request->hasFile('imagen')) {
+            $file = $request->file('imagen');
+            $filename = time().'_'.$file->getClientOriginalName();
+            // Almacena la imagen en "public/productos"
+            $imagenPath = $file->storeAs('productos', $filename, 'public');
+        }
 
-        // Intentar guardar el producto y capturar el error si falla
         try {
             Producto::create([
                 'codigo_producto' => $codigo,
@@ -47,15 +51,15 @@ class ProductoController extends Controller
                 'id_categoria' => $request->id_categoria,
                 'stock' => $request->stock,
                 'destacado' => 0,
+                'imagen' => $imagenPath, // Guarda la ruta de la imagen (puede ser null si no se subió)
             ]);
 
-            // Redireccionar a la vista de listado de productos (ruta GET /productos)
             return redirect('/productos')->with('success', 'Producto creado correctamente.');
         } catch (\Exception $e) {
-            // Redireccionar de vuelta con mensaje de error si falla
             return redirect()->back()->withErrors(['error' => 'No se pudo guardar el producto: ' . $e->getMessage()]);
         }
     }
+
 
     public function index()
     {

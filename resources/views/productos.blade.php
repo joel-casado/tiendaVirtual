@@ -25,6 +25,7 @@
                     <th>Precio</th>
                     <th>Stock</th>
                     <th>Destacado</th>
+                    <th>Imagen</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +38,13 @@
                         <td>{{ $producto->precio }}</td>
                         <td>{{ $producto->stock }}</td>
                         <td>{{ $producto->destacado ? 'Sí' : 'No' }}</td>
+                        <td>
+                            @if($producto->imagen)
+                                <img src="{{ asset('storage/' . $producto->imagen) }}" alt="Imagen de {{ $producto->nombre_producto }}" style="max-width: 100px;">
+                            @else
+                                Sin imagen
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
