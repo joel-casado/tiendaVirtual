@@ -33,3 +33,6 @@ Route::get('/crearProducto', [ProductoController::class, 'crear'])->name('crearP
 Route::post('/crearProducto', [ProductoController::class, 'guardar'])->name('guardarProducto');
 
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
+
+Route::post('/productos/editar', [ProductoController::class, 'editar'])->name('productos.editar');
+

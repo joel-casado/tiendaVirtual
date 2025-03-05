@@ -67,4 +67,20 @@ class ProductoController extends Controller
         $productos = Producto::with('categoria')->get();
         return view('productos', compact('productos'));
     }
+    public function editar(Request $request)
+{
+    $request->validate([
+        'id' => 'required|exists:productos,id',
+        'precio' => 'required|numeric|min:0.01',
+        'stock' => 'required|integer|min:0',
+    ]);
+
+    $producto = Producto::find($request->id);
+    $producto->precio = number_format((float)$request->precio, 2, '.', '');
+    $producto->stock = $request->stock;
+    $producto->save();
+
+    return response()->json(['mensaje' => 'Producto actualizado correctamente']);
+}
+
 }
