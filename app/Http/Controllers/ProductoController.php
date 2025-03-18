@@ -73,11 +73,13 @@ class ProductoController extends Controller
         'id' => 'required|exists:productos,id',
         'precio' => 'required|numeric|min:0.01',
         'stock' => 'required|integer|min:0',
+        'destacado' => 'required|boolean',
     ]);
 
     $producto = Producto::find($request->id);
     $producto->precio = number_format((float)$request->precio, 2, '.', '');
     $producto->stock = $request->stock;
+    $producto->destacado = $request
     $producto->save();
 
     return response()->json(['mensaje' => 'Producto actualizado correctamente']);

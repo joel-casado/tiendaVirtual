@@ -36,3 +36,5 @@ Route::get('/productos', [ProductoController::class, 'index'])->name('productos.
 
 Route::post('/productos/editar', [ProductoController::class, 'editar'])->name('productos.editar');
 
+Route::post('/productos/toggle-activado', [ProductoController::class, 'toggleActivado'])->name('productos.toggleActivado');
+
