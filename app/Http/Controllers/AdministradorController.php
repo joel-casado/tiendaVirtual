@@ -21,7 +21,7 @@ class AdministradorController extends Controller
 
         // Validar los datos del formulario
         $request->validate([
-            'usuario' => 'required|string', // CAMBIADO de 'username' a 'usuario'
+            'usuario' => 'required|string',
             'password' => 'required|string',
         ]);
 

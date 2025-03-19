@@ -1,0 +1,76 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background: url('/images/cocina.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #F8F1E5;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 100vh;
+    margin: 0;
+}
+
+/* Contenedor del formulario */
+form {
+    background-color: rgba(143, 22, 48, 0.9);  /* Fondo con tono 8F1630 semitransparente */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 420px;
+}
+
+/* Título */
+h1 {
+    color: #CDA45E;  /* Tono cálido para el título */
+    text-align: center;
+
+    font-size: 16px;
+}
+
+/* Etiquetas del formulario */
+form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+/* Campos de entrada y textarea */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea {
+    width: 90%;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Estilos para el botón */
+form button {
+    width: 50%;
+    padding: 10px;
+    background-color: #CDA45E;
+    color: #2C2C2C;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #B08A50;
+}
+
+/* Enlaces */
+a {
+    margin-left: 20px;
+    color: #B08A50;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:hover {
+    text-decoration: underline;
+}

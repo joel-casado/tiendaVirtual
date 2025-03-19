@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Listado de Productos</title>
     <link rel="stylesheet" href="{{ asset('css/productos.css') }}">
-    <!-- Incluye jQuery si aún no lo has hecho -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
     <h1>Listado de Productos en Stock</h1>
@@ -62,10 +62,26 @@
         </table>
     @endif
 
-    <p><a href="{{ url('/dashboard') }}">Volver</a></p>
+    <!-- Modal de Edición: Colócalo fuera de las etiquetas <script> -->
+    <div id="modal-editar" style="display: none;">
+        <form id="form-editar" action="{{ url('/productos/editar') }}" method="POST">
+            @csrf
+            <input type="hidden" name="id" id="producto-id">
+            <label for="producto-precio">Precio:</label>
+            <input type="number" step="0.01" name="precio" id="producto-precio" required>
+            <label for="producto-stock">Stock:</label>
+            <input type="number" name="stock" id="producto-stock" required>
+            <select name="destacado" required>
+                <option value="">Selecciona si es destacado</option>
+                <option value="1">Si</option>
+                <option value="0">No</option>
+            </select>
+            <button type="submit">Guardar cambios</button>
+            <button type="button" id="cerrar-modal">Cerrar</button>
+        </form>
+    </div>
 
-    <!-- Modal de Edición (si ya tienes implementado ese modal) -->
-    <!-- ... tu código para el modal ... -->
+    <p><a href="{{ url('/dashboard') }}">Volver</a></p>
 
     <!-- Incluir el archivo JavaScript al final del body -->
     <script src="{{ asset('js/edicion.js') }}"></script>

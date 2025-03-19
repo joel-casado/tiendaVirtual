@@ -68,21 +68,35 @@ class ProductoController extends Controller
         return view('productos', compact('productos'));
     }
     public function editar(Request $request)
-{
-    $request->validate([
-        'id' => 'required|exists:productos,id',
-        'precio' => 'required|numeric|min:0.01',
-        'stock' => 'required|integer|min:0',
-        'destacado' => 'required|boolean',
-    ]);
+    {
+        $request->validate([
+            'id' => 'required|exists:productos,id',
+            'precio' => 'required|numeric|min:0.01',
+            'stock' => 'required|integer|min:0',
+            'destacado' => 'required|in:0,1',
+        ]);
 
-    $producto = Producto::find($request->id);
-    $producto->precio = number_format((float)$request->precio, 2, '.', '');
-    $producto->stock = $request->stock;
-    $producto->destacado = $request
-    $producto->save();
+        $producto = Producto::find($request->id);
+        $producto->precio = number_format((float)$request->precio, 2, '.', '');
+        $producto->stock = $request->stock;
+        $producto->destacado = $request->destacado;
+        $producto->save();
 
-    return response()->json(['mensaje' => 'Producto actualizado correctamente']);
-}
+        return response()->json(['mensaje' => 'Producto actualizado correctamente']);
+    }
+    public function toggleActivado(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:productos,id',
+            'activado' => 'required|boolean',
+        ]);
+
+        $producto = Producto::find($request->id);
+        $producto->activado = $request->activado;
+        $producto->save();
+
+        return response()->json(['mensaje' => 'Estado actualizado correctamente']);
+    }
+
 
 }

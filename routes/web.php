@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\CompradorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,4 +38,8 @@ Route::get('/productos', [ProductoController::class, 'index'])->name('productos.
 Route::post('/productos/editar', [ProductoController::class, 'editar'])->name('productos.editar');
 
 Route::post('/productos/toggle-activado', [ProductoController::class, 'toggleActivado'])->name('productos.toggleActivado');
+
+Route::get('/registroComprador', [CompradorController::class, 'showRegister'])->name('registroComprador');
+
+Route::post('/registroComprador', [CompradorController::class, 'register'])->name('registroComprador.post');
 
