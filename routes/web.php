@@ -7,7 +7,7 @@ use App\Http\Controllers\CompradorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('/loginAdmin');
+    return view('dashboard.index');
 });
 // Ruta para mostrar el formulario de login
 Route::get('/loginAdmin', [AdministradorController::class, 'showLogin'])->name('login');
@@ -42,4 +42,8 @@ Route::post('/productos/toggle-activado', [ProductoController::class, 'toggleAct
 Route::get('/registroComprador', [CompradorController::class, 'showRegister'])->name('registroComprador');
 
 Route::post('/registroComprador', [CompradorController::class, 'register'])->name('registroComprador.post');
+
+Route::get('/inicio', function () {
+    return view('dashboard.index');
+})->name('inicio');
 
