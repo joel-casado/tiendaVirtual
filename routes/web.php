@@ -10,10 +10,10 @@ Route::get('/', function () {
     return view('dashboard.index');
 });
 // Ruta para mostrar el formulario de login
-Route::get('/loginAdmin', [AdministradorController::class, 'showLogin'])->name('login');
+Route::get('/login', [AdministradorController::class, 'showLogin'])->name('login');
 
 // Ruta para procesar el login (POST)
-Route::post('/loginAdmin', [AdministradorController::class, 'login']);
+Route::post('/login', [AdministradorController::class, 'login']);
 
 // Ruta para cerrar sesión
 Route::post('/logout', [AdministradorController::class, 'logout'])->name('logout');
@@ -43,7 +43,8 @@ Route::get('/registroComprador', [CompradorController::class, 'showRegister'])->
 
 Route::post('/registroComprador', [CompradorController::class, 'register'])->name('registroComprador.post');
 
-Route::get('/inicio', function () {
-    return view('dashboard.index');
-})->name('inicio');
+Route::get('/inicio', function () {return view('dashboard.index');})->name('inicio');
+
+Route::view('/login', 'login')->name('login');
+
 

@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Rosso Oro</title>
 
-  
+
   <!-- Fuentes -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -40,11 +40,11 @@
 
     <div class="branding d-flex align-items-center">
       <div class="container position-relative d-flex align-items-center justify-content-between">
-        
+
         <a href="index.html" class="logo d-flex align-items-center me-auto">
           <h1 class="sitename">Rosso Oro</h1>
         </a>
-    
+
         <!-- Menú de navegación-->
         <nav id="navmenu" class="navmenu me-auto">
           <ul class="d-flex gap-3">
@@ -56,12 +56,13 @@
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
-    
+
         <div class="d-flex gap-2">
           <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">HAZ TU PEDIDO</a>
-          <a class="btn-book-a-table d-none d-xl-block" href="#login">INICIAR SESIÓN</a>
+          <a class="btn-book-a-table d-none d-xl-block" href="{{ route('login') }}">INICIAR SESIÓN</a>
+
         </div>
-    
+
       </div>
     </div>
 

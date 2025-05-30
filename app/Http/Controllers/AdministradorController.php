@@ -12,7 +12,7 @@ class AdministradorController extends Controller
     // Mostrar el formulario de login
     public function showLogin()
     {
-        return view('loginAdmin'); // Asegúrate de que login.blade.php está en resources/views
+        return view('login'); // Asegúrate de que login.blade.php está en resources/views
     }
 
     // Procesar el login
@@ -42,7 +42,7 @@ class AdministradorController extends Controller
         $request->session()->invalidate(); // Invalida la sesión
         $request->session()->regenerateToken(); // Regenera el token CSRF
 
-        return redirect('/loginAdmin'); // Redirige al login
+        return redirect('/login'); // Redirige al login
     }
 
     public function dashboard()
@@ -56,10 +56,10 @@ class AdministradorController extends Controller
             'password_nuevo' => 'required|min:8|confirmed',
         ]);
 
-        $admin = Auth::user(); // Obtener el administrador autenticado
+        $admin = Administrador::where('usuario', Auth::user()->usuario)->first(); // Obtener el administrador autenticado
 
         // Verificar si la contraseña actual es correcta
-        if (!Hash::check($request->password_actual, $admin->password)) {
+        if (!$admin || !Hash::check($request->password_actual, $admin->password)) {
             return back()->withErrors(['password_actual' => 'La contraseña actual es incorrecta']);
         }
 

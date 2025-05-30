@@ -38,6 +38,6 @@ class CompradorController extends Controller
         ]);
 
         // Redirigir a una página de login para compradores (o donde prefieras)
-        return redirect('/loginAdmin')->with('success', 'Cuenta creada correctamente, por favor inicia sesión.');
+        return redirect('/login')->with('success', 'Cuenta creada correctamente, por favor inicia sesión.');
     }
 }
