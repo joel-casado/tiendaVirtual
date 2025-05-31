@@ -59,7 +59,10 @@
 
         <div class="d-flex gap-2">
           <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">HAZ TU PEDIDO</a>
-          @if(session('comprador'))
+            @if(session('comprador'))
+                <a href="{{ route('carrito.ver') }}" class="btn-book-a-table d-none d-xl-block">Ver carrito</a>
+            @endif
+            @if(session('comprador'))
                 <span class="text-white me-2">Hola, {{ session('comprador')->nombre }}</span>
 
                 <a href="#" class="btn-book-a-table d-none d-xl-block" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -98,6 +101,7 @@
             <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
               <a href="#book-a-table" class="cta-btn">Haz tu Pedido</a>
             </div>
+
           </div>
         </div>
       </div>
@@ -150,64 +154,53 @@
     <!-- Seccion Menu -->
     <section id="menu" class="menu section">
 
-      <div class="container section-title" data-aos="fade-up">
+    <div class="container section-title" data-aos="fade-up">
         <h2>MENÚ</h2>
-        <p>Echa Un Vistazo A Nuestro Menú</p>
-      </div>
+        <p>Explora nuestras categorías y platos</p>
+    </div>
+    @if(session('success'))
+        <div style="color: green; margin: 10px 0;">
+            {{ session('success') }}
+        </div>
+    @endif
 
-      <div class="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-        <!-- Filtros Menú -->
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul class="menu-filters isotope-filters">
-              <li data-filter="*" class="filter-active">Todos</li>
-              <li data-filter=".filter-starters">Entrantes</li>
-              <li data-filter=".filter-salads">Segundos</li>
-              <li data-filter=".filter-specialty">Postres</li>
-            </ul>
-          </div>
+    @foreach($categorias as $categoria)
+        <div class="container section-title" data-aos="fade-up">
+        <h3>{{ $categoria->nombre_categoria }}</h3>
         </div>
 
-        <!-- Items Menú-->
+        <div class="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
         <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
+            @forelse($categoria->productos as $producto)
+            <div class="col-lg-6 menu-item isotope-item">
+                <img src="{{ asset('storage/' . $producto->imagen) }}" class="menu-img" alt="{{ $producto->nombre_producto }}">
+                <div class="menu-content">
+                <a href="#">{{ $producto->nombre_producto }}</a>
+                <span>{{ number_format($producto->precio, 2) }}€</span>
+                </div>
+                <div class="menu-ingredients">
+                {{ $producto->descripcion }}
+                </div>
 
-          <div class="col-lg-6 menu-item isotope-item filter-starters">
-            <img src="/images/menu/spinach-salad.jpg" class="menu-img" alt="">
-            <div class="menu-content">
-              <a href="#">Ensalada Gourmet de Pollo</a><span>10,95€</span>
-            </div>
-            <div class="menu-ingredients">
-              Pollo, lechuga, remolacha
-            </div>
-          </div>
+                <form action="{{ route('carrito.agregar') }}" method="POST" style="margin-top: 10px;">
+                    @csrf
+                    <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                    <button type="submit" class="btn-book-a-table d-none d-xl-block">
+                        Añadir al carrito
+                    </button>
+                </form>
 
-          <div class="col-lg-6 menu-item isotope-item filter-salads">
-            <img src="/images/menu/spinach-salad.jpg" class="menu-img" alt="">
-            <div class="menu-content">
-              <a href="#">Ensalada Gourmet de Pollo</a><span>10,95€</span>
             </div>
-            <div class="menu-ingredients">
-              Pollo, lechuga, remolacha
-            </div>
-          </div>
-
-          <div class="col-lg-6 menu-item isotope-item filter-specialty">
-            <img src="/images/menu/spinach-salad.jpg"" class="menu-img" alt="">
-            <div class="menu-content">
-              <a href="#">Ensalada Gourmet de Pollo</a><span>10,95€</span>
-            </div>
-            <div class="menu-ingredients">
-              Pollo, lechuga, remolacha
-            </div>
-          </div>
-
+            @empty
+            <p>No hay productos disponibles en esta categoría.</p>
+            @endforelse
         </div>
-
-      </div>
+        </div>
+    @endforeach
 
     </section>
-    <!-- Sección Menú-->
+    <!-- Fin Seccion Menu -->
+
 
   </main>
 
