@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Administrador;
+use App\Models\Comprador;
 
 class AdministradorController extends Controller
 {
@@ -29,6 +30,12 @@ class AdministradorController extends Controller
         if (Auth::attempt(['usuario' => $request->usuario, 'password' => $request->password])) {
             return redirect()->intended('/dashboard');
         }
+        // Verificar si es comprador (sin Auth, usando sesión manual)
+        $comprador = Comprador::where('email', $request->usuario)->first();
+        if ($comprador && Hash::check($request->password, $comprador->password)) {
+            session(['comprador' => $comprador]); // Guardar comprador en sesión
+            return redirect('/'); // Redirige a página principal
+        }
 
         // Si falla la autenticación, regresar con un mensaje de error
         return back()->withErrors(['login_error' => 'Usuario o contraseña incorrectos']);
@@ -38,7 +45,7 @@ class AdministradorController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-
+        $request->session()->forget('comprador'); // Cierra sesión de comprador
         $request->session()->invalidate(); // Invalida la sesión
         $request->session()->regenerateToken(); // Regenera el token CSRF
 

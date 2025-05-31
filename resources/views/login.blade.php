@@ -14,7 +14,7 @@
         </div>
     @endif
     <div class="login-container">
-        <form action="{{ url('/loginAdmin') }}" method="post">
+        <form action="{{ url('/login') }}" method="post">
             @csrf
             <label for="usuario">Usuario:</label>
             <input type="text" name="usuario" id="usuario" required>

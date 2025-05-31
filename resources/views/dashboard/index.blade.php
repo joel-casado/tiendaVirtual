@@ -59,7 +59,21 @@
 
         <div class="d-flex gap-2">
           <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">HAZ TU PEDIDO</a>
-          <a class="btn-book-a-table d-none d-xl-block" href="{{ route('login') }}">INICIAR SESIÓN</a>
+          @if(session('comprador'))
+                <span class="text-white me-2">Hola, {{ session('comprador')->nombre }}</span>
+
+                <a href="#" class="btn-book-a-table d-none d-xl-block" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    CERRAR SESIÓN
+                </a>
+
+                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            @else
+                <a class="btn-book-a-table d-none d-xl-block" href="{{ url('/login') }}">INICIAR SESIÓN</a>
+            @endif
+
+
 
         </div>
 
@@ -78,6 +92,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 d-flex flex-column align-items-center align-items-lg-start">
+
             <h2 data-aos="fade-up" data-aos-delay="100">Bienvenido a <span>Rosso Oro</span></h2>
             <p data-aos="fade-up" data-aos-delay="200">Auténtica cocina italiana con un toque de lujo</p>
             <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
