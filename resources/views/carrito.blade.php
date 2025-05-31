@@ -43,8 +43,13 @@
                 @csrf
                 <button type="submit" class="btn-book-a-table d-none d-xl-block">Vaciar carrito</button>
             </form>
+            <form action="{{ route('carrito.confirmar') }}" method="POST" style="display:inline;">
+                @csrf
+                <button type="submit" class="btn-book-a-table d-none d-xl-block">Confirmar pedido</button>
+            </form>
 
-            <a href="#" class="btn-book-a-table d-none d-xl-block">Confirmar pedido</a> {{-- funcionalidad futura --}}
+
+
         </div>
 
         <p><a href="{{ url('/') }}">← Seguir comprando</a></p>

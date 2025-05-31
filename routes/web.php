@@ -7,11 +7,13 @@ use App\Http\Controllers\CompradorController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Categoria;
 use App\Models\Producto;
+use App\Models\Compra;
+use App\Models\DetalleCompra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
-Route::get('/', function () {
-    return view('dashboard.index');
-});
 // Ruta para mostrar el formulario de login
 Route::get('/login', [AdministradorController::class, 'showLogin'])->name('login');
 
@@ -46,7 +48,11 @@ Route::get('/registroComprador', [CompradorController::class, 'showRegister'])->
 
 Route::post('/registroComprador', [CompradorController::class, 'register'])->name('registroComprador.post');
 
-Route::get('/', function () {$categorias = Categoria::with('productos')->get();return view('dashboard.index', compact('categorias'));});
+Route::get('/', function () {$categorias = Categoria::all();return view('dashboard.index', compact('categorias'));});
+
+Route::get('/categoria/{id}', function ($id) {$categorias = Categoria::all();$categoriaSeleccionada = Categoria::with('productos')->findOrFail($id);
+    return view('dashboard.index', compact('categorias', 'categoriaSeleccionada'));
+})->name('categoria.ver');
 
 Route::view('/login', 'login')->name('login');
 
@@ -74,6 +80,83 @@ Route::get('/carrito', function () {$carrito = session('carrito', []);return vie
 
 Route::post('/carrito/vaciar', function () {session()->forget('carrito');return redirect('/carrito')->with('success', 'Carrito vaciado correctamente');})->name('carrito.vaciar');
 
+Route::get('/pago', function () {return view('pago');});
 
+Route::post('/carrito/confirmar', function () {
+    $comprador = session('comprador');
+    $carrito = session('carrito', []);
 
+    if (!$comprador || empty($carrito)) {
+        return redirect('/carrito')->withErrors(['error' => 'No hay productos en el carrito']);
+    }
+
+    DB::beginTransaction();
+
+    try {
+        $total = collect($carrito)->sum(fn($item) => $item['precio'] * $item['cantidad']);
+
+        $compra = Compra::create([
+            'id_comprador' => $comprador->id,
+            'precio_total' => $total,
+            'estado' => 'pendiente',
+            'fecha_compra' => Carbon::now(),
+            'fecha_envio' => null,
+        ]);
+
+        foreach ($carrito as $productoId => $item) {
+            DetalleCompra::create([
+                'id_compra' => $compra->id,
+                'id_producto' => $productoId,
+                'cantidad' => $item['cantidad'],
+                'precio_producto' => $item['precio'],
+            ]);
+        }
+
+        DB::commit();
+        session()->forget('carrito');
+
+        return redirect('/pago')->with('success', 'Pedido confirmado. Procede al pago.');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error('ERROR AL CONFIRMAR PEDIDO: ' . $e->getMessage()); // 🪵
+        return redirect('/carrito')->withErrors(['error' => 'Error al confirmar el pedido: ' . $e->getMessage()]);
+    }
+})->name('carrito.confirmar');
+
+Route::post('/pagar', function () {
+    // Aquí puedes simular que se procesa el pago y se actualiza el estado de la última compra
+    $comprador = session('comprador');
+
+    // Obtener la última compra pendiente de este comprador
+    $compra = \App\Models\Compra::where('id_comprador', $comprador->id)
+        ->where('estado', 'pendiente')
+        ->latest('fecha_compra')
+        ->first();
+
+    if ($compra) {
+        $compra->estado = 'pagado';
+        $compra->fecha_envio = now(); // Puedes ajustar esto según lo que signifique para ti
+        $compra->save();
+
+        return redirect('/')->with('success', 'Pago realizado con éxito. Gracias por tu pedido.');
+    }
+
+    return redirect('/pago')->withErrors(['error' => 'No se encontró un pedido pendiente.']);
+})->name('pago.procesar');
+
+Route::get('/mis-pedidos', function () {
+    $comprador = session('comprador');
+
+    if (!$comprador) {
+        return redirect('/login')->withErrors(['error' => 'Debes iniciar sesión']);
+    }
+
+    // Obtener las compras con los productos asociados
+    $compras = Compra::where('id_comprador', $comprador->id)
+        ->orderByDesc('fecha_compra')
+        ->with('detalles.producto') // Asumiendo relaciones definidas
+        ->get();
+
+    return view('pedidos', compact('comprador', 'compras'));
+})->name('pedidos');
 

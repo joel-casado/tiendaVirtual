@@ -75,6 +75,9 @@
             @else
                 <a class="btn-book-a-table d-none d-xl-block" href="{{ url('/login') }}">INICIAR SESIÓN</a>
             @endif
+            @if(session('comprador'))
+                <a href="{{ route('pedidos') }}" class="btn-book-a-table d-none d-xl-block">Mis pedidos</a>
+            @endif
 
 
 
@@ -164,39 +167,48 @@
         </div>
     @endif
 
-    @foreach($categorias as $categoria)
-        <div class="container section-title" data-aos="fade-up">
-        <h3>{{ $categoria->nombre_categoria }}</h3>
-        </div>
+    <!-- Listado de categorías como botones -->
+      <div class="container d-flex flex-wrap gap-3 justify-content-center my-5">
+          @foreach($categorias as $categoria)
+              <a href="{{ route('categoria.ver', $categoria->id) }}"
+                class="btn-book-a-table d-inline-block px-4 py-3"
+                style="font-size: 1.2rem; border-radius: 12px; text-transform: uppercase;">
+                  {{ $categoria->nombre_categoria }}
+              </a>
+          @endforeach
+      </div>
 
-        <div class="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-        <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
-            @forelse($categoria->productos as $producto)
-            <div class="col-lg-6 menu-item isotope-item">
-                <img src="{{ asset('storage/' . $producto->imagen) }}" class="menu-img" alt="{{ $producto->nombre_producto }}">
-                <div class="menu-content">
-                <a href="#">{{ $producto->nombre_producto }}</a>
-                <span>{{ number_format($producto->precio, 2) }}€</span>
-                </div>
-                <div class="menu-ingredients">
-                {{ $producto->descripcion }}
-                </div>
+      <!-- Mostrar productos solo si se ha seleccionado una categoría -->
+      @if(isset($categoriaSeleccionada))
+          <div class="container section-title" data-aos="fade-up">
+              <h2>{{ $categoriaSeleccionada->nombre_categoria }}</h2>
+          </div>
 
-                <form action="{{ route('carrito.agregar') }}" method="POST" style="margin-top: 10px;">
-                    @csrf
-                    <input type="hidden" name="producto_id" value="{{ $producto->id }}">
-                    <button type="submit" class="btn-book-a-table d-none d-xl-block">
-                        Añadir al carrito
-                    </button>
-                </form>
+          <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
+              @forelse($categoriaSeleccionada->productos as $producto)
+                  <div class="col-lg-6 menu-item isotope-item">
+                      <img src="{{ asset('storage/' . $producto->imagen) }}" class="menu-img" alt="{{ $producto->nombre_producto }}">
+                      <div class="menu-content">
+                          <a href="#">{{ $producto->nombre_producto }}</a>
+                          <span>{{ number_format($producto->precio, 2) }}€</span>
+                      </div>
+                      <div class="menu-ingredients">
+                          {{ $producto->descripcion }}
+                      </div>
+                      @if(session('comprador'))
+                          <form action="{{ route('carrito.agregar') }}" method="POST" style="margin-top: 10px;">
+                              @csrf
+                              <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                              <button type="submit" class="btn-book-a-table d-none d-xl-block">Añadir al carrito</button>
+                          </form>
+                      @endif
+                  </div>
+              @empty
+                  <p>No hay productos en esta categoría.</p>
+              @endforelse
+          </div>
+      @endif
 
-            </div>
-            @empty
-            <p>No hay productos disponibles en esta categoría.</p>
-            @endforelse
-        </div>
-        </div>
-    @endforeach
 
     </section>
     <!-- Fin Seccion Menu -->

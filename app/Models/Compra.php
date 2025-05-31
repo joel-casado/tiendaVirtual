@@ -18,7 +18,17 @@ class Compra extends Model
 
     public function detalles()
     {
-        return $this->hasMany(DetalleCompra::class, 'id_compra');
+        return $this->hasMany(\App\Models\DetalleCompra::class, 'id_compra');
     }
+
+    protected $fillable = [
+        'id_comprador',
+        'precio_total',
+        'estado',
+        'fecha_compra',
+        'fecha_envio'
+    ];
+
+
 }
 
