@@ -42,7 +42,7 @@
 
         <div class="form-actions">
             <button type="submit">Crear Cuenta</button>
-            <a href="{{ url('/loginAdmin') }}">Volver al panel</a>
+            <a href="{{ url('/') }}">Volver</a>
         </div>
     </form>
 </body>

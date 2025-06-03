@@ -58,30 +58,31 @@
         </nav>
 
         <div class="d-flex gap-2">
-          <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">HAZ TU PEDIDO</a>
-            @if(session('comprador'))
-                <a href="{{ route('carrito.ver') }}" class="btn-book-a-table d-none d-xl-block">Ver carrito</a>
-            @endif
-            @if(session('comprador'))
-                <span class="text-white me-2">Hola, {{ session('comprador')->nombre }}</span>
+            <a class="btn-book-a-table d-none d-xl-block" href="{{ route('carrito.ver') }}">
+                🛒 Ver carrito
+                @php $carrito = session('carrito', []); @endphp
+                @if(count($carrito) > 0)
+                    ({{ count($carrito) }})
+                @endif
+            </a>
 
-                <a href="#" class="btn-book-a-table d-none d-xl-block" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    CERRAR SESIÓN
-                </a>
-
+            @if(session('comprador'))
+                <a class="btn-book-a-table d-none d-xl-block" href="{{ route('pedidos') }}">Mis pedidos</a>
                 <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
+
+                <a href="#" class="btn-book-a-table d-none d-xl-block"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    CERRAR SESIÓN
+                </a>
+
             @else
-                <a class="btn-book-a-table d-none d-xl-block" href="{{ url('/login') }}">INICIAR SESIÓN</a>
+                <a class="btn-book-a-table d-none d-xl-block" href="{{ url('/login') }}">Iniciar sesión</a>
+                <a class="btn-book-a-table d-none d-xl-block" href="{{ url('/registroComprador') }}">Registrarse</a>
             @endif
-            @if(session('comprador'))
-                <a href="{{ route('pedidos') }}" class="btn-book-a-table d-none d-xl-block">Mis pedidos</a>
-            @endif
-
-
-
         </div>
+
 
       </div>
     </div>
@@ -195,13 +196,12 @@
                       <div class="menu-ingredients">
                           {{ $producto->descripcion }}
                       </div>
-                      @if(session('comprador'))
-                          <form action="{{ route('carrito.agregar') }}" method="POST" style="margin-top: 10px;">
-                              @csrf
-                              <input type="hidden" name="producto_id" value="{{ $producto->id }}">
-                              <button type="submit" class="btn-book-a-table d-none d-xl-block">Añadir al carrito</button>
-                          </form>
-                      @endif
+                      <form action="{{ route('carrito.agregar') }}" method="POST" style="margin-top: 10px;">
+                            @csrf
+                            <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                            <button type="submit" class="btn-book-a-table d-none d-xl-block">Añadir al carrito</button>
+                        </form>
+
                   </div>
               @empty
                   <p>No hay productos en esta categoría.</p>
@@ -233,6 +233,47 @@
 
   <!-- Main JS File -->
   <script src="/js/main.js"></script>
+  @php
+    $carrito = session('carrito', []);
+@endphp
+
+@php
+    $carrito = session('carrito', []);
+@endphp
+
+@if(count($carrito) > 0)
+    <div id="carrito-flotante" style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0,0,0,0.15);
+        border: 2px solid #8F1630;
+        border-radius: 12px;
+        box-shadow: 0 0 12px rgba(0,0,0,0.15);
+        padding: 15px;
+        z-index: 9999;
+        width: 300px;
+        max-height: 400px;
+        overflow-y: auto;
+        font-family: 'Poppins', sans-serif;
+    ">
+        <h5 style="margin-top: 0; color: #8F1630;">🛒 Tu carrito</h5>
+        <ul>
+            @foreach($carrito as $item)
+                <li>
+                    {{ $item['nombre'] }} × {{ $item['cantidad'] }} —
+                    {{ number_format($item['precio'] * $item['cantidad'], 2) }} €
+                </li>
+            @endforeach
+        </ul>
+        <p><strong>Total:</strong>
+            {{ number_format(collect($carrito)->sum(fn($item) => $item['precio'] * $item['cantidad']), 2) }} €
+        </p>
+        <a href="{{ route('carrito.ver') }}" class="btn-book-a-table d-block text-center mt-2">Ver carrito</a>
+    </div>
+@endif
+
+
 
 </body>
 

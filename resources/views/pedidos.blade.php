@@ -27,6 +27,10 @@
                 @endforeach
             </ul>
         </div>
+        <a href="{{ route('pedido.pdf', $compra->id) }}" class="btn-book-a-table d-none d-xl-block" style="margin-top: 10px;">
+            Descargar PDF
+        </a>
+
     @empty
         <p>No has realizado ningún pedido aún.</p>
     @endforelse

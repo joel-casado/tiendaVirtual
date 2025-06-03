@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 // Ruta para mostrar el formulario de login
 Route::get('/login', [AdministradorController::class, 'showLogin'])->name('login');
@@ -86,8 +87,14 @@ Route::post('/carrito/confirmar', function () {
     $comprador = session('comprador');
     $carrito = session('carrito', []);
 
-    if (!$comprador || empty($carrito)) {
-        return redirect('/carrito')->withErrors(['error' => 'No hay productos en el carrito']);
+    if (empty($carrito)) {
+        return redirect('/carrito')->withErrors(['error' => 'Tu carrito está vacío']);
+    }
+
+    // 👇 Redirigir si no está logueado
+    if (!$comprador) {
+        return redirect('/registroComprador')->withErrors([
+        ]);
     }
 
     DB::beginTransaction();
@@ -159,4 +166,23 @@ Route::get('/mis-pedidos', function () {
 
     return view('pedidos', compact('comprador', 'compras'));
 })->name('pedidos');
+Route::get('/pedido/{id}/pdf', function ($id) {
+    $comprador = session('comprador');
+
+    // Seguridad: comprobar que el comprador está logueado
+    if (!$comprador) {
+        return redirect('/login')->withErrors(['error' => 'Debes iniciar sesión.']);
+    }
+
+    // Buscar el pedido solo si pertenece al comprador autenticado
+    $compra = Compra::where('id', $id)
+        ->where('id_comprador', $comprador->id)
+        ->with('detalles.producto')
+        ->firstOrFail();
+
+    // Generar el PDF usando una vista Blade
+    $pdf = Pdf::loadView('pedido_pdf', compact('compra', 'comprador'));
+
+    return $pdf->download("pedido-{$compra->id}.pdf");
+})->name('pedido.pdf');
 

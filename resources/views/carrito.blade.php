@@ -47,10 +47,12 @@
                 @csrf
                 <button type="submit" class="btn-book-a-table d-none d-xl-block">Confirmar pedido</button>
             </form>
-
-
-
         </div>
+        @if(!session('comprador'))
+            <p style="color: #8F1630; margin-top: 10px;">
+                Para pagar necesitarás iniciar sesión o registrarte.
+            </p>
+        @endif
 
         <p><a href="{{ url('/') }}">← Seguir comprando</a></p>
     @endif
