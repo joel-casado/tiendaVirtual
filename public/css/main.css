@@ -2321,3 +2321,36 @@ section,
     font-size: 0.98rem;
   }
 }
+
+/* --- Botones de Cantidad --- */
+.btn-cantidad {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 1.1rem;
+  font-family: var(--heading-font);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.btn-cantidad:disabled {
+  background: #ccc;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.cantidad-num {
+  display: inline-block;
+  min-width: 22px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+}
