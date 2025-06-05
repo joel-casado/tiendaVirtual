@@ -175,12 +175,12 @@
         <div class="row" data-aos="fade-up" data-aos-delay="100">
           <div class="col-lg-12 d-flex justify-content-center">
             <ul class="menu-filters isotope-filters">
-              <li data-filter="*" class="{{ !isset($categoriaSeleccionada) ? 'filter-active' : '' }}">
+              <li data-filter="*" class="filter-active">
                 <a href="#" style="font-family: 'Playfair Display', serif;">Todos</a>
               </li>
               @foreach($categorias as $categoria)
-                <li data-filter=".filter-cat-{{ $categoria->id }}" class="{{ (isset($categoriaSeleccionada) && $categoriaSeleccionada->id === $categoria->id) ? 'filter-active' : '' }}">
-                  <a href="{{ route('categoria.ver', $categoria->id) }}" style="font-family: 'Playfair Display', serif;">
+                <li data-filter=".filter-cat-{{ $categoria->id }}">
+                  <a href="#" style="font-family: 'Playfair Display', serif;">
                     {{ $categoria->nombre_categoria }}
                   </a>
                 </li>
@@ -191,55 +191,29 @@
 
         <!-- Items Menú-->
         <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
-          @if(isset($categoriaSeleccionada))
-            @forelse($categoriaSeleccionada->productos as $producto)
-              <div class="col-lg-6 menu-item isotope-item filter-cat-{{ $categoriaSeleccionada->id }}">
+          @foreach($categorias as $categoria)
+            @foreach($categoria->productos as $producto)
+              <div class="col-lg-6 menu-item isotope-item filter-cat-{{ $categoria->id }}">
                 <img src="{{ asset('storage/' . $producto->imagen) }}" class="menu-img" alt="{{ $producto->nombre_producto }}">
                 <div class="menu-content-flex">
-                    <div class="menu-main">
-                        <a href="#" class="menu-title">{{ $producto->nombre_producto }}</a>
-                        <div class="menu-ingredients">{{ $producto->descripcion }}</div>
-                    </div>
-                    <div class="menu-side">
-                        <span class="menu-price">{{ number_format($producto->precio, 2) }}€</span>
-                        <form action="{{ route('carrito.agregar') }}" method="POST" class="menu-cart-form">
-                            @csrf
-                            <input type="hidden" name="producto_id" value="{{ $producto->id }}">
-                            <button type="submit" class="btn-cart-icon" title="Añadir al carrito">
-                                <i class="bi bi-cart-plus"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-              </div>
-            @empty
-              <p>No hay productos en esta categoría.</p>
-            @endforelse
-          @else
-            @foreach($categorias as $categoria)
-              @foreach($categoria->productos as $producto)
-                <div class="col-lg-6 menu-item isotope-item filter-cat-{{ $categoria->id }}">
-                  <img src="{{ asset('storage/' . $producto->imagen) }}" class="menu-img" alt="{{ $producto->nombre_producto }}">
-                  <div class="menu-content-flex">
-                    <div class="menu-main">
-                      <a href="#" class="menu-title">{{ $producto->nombre_producto }}</a>
-                      <div class="menu-ingredients">{{ $producto->descripcion }}</div>
-                    </div>
-                    <div class="menu-side">
-                      <span class="menu-price">{{ number_format($producto->precio, 2) }}€</span>
-                      <form action="{{ route('carrito.agregar') }}" method="POST" class="menu-cart-form">
-                        @csrf
-                        <input type="hidden" name="producto_id" value="{{ $producto->id }}">
-                        <button type="submit" class="btn-cart-icon" title="Añadir al carrito">
-                          <i class="bi bi-cart-plus"></i>
-                        </button>
-                      </form>
-                    </div>
+                  <div class="menu-main">
+                    <a href="#" class="menu-title">{{ $producto->nombre_producto }}</a>
+                    <div class="menu-ingredients">{{ $producto->descripcion }}</div>
+                  </div>
+                  <div class="menu-side">
+                    <span class="menu-price">{{ number_format($producto->precio, 2) }}€</span>
+                    <form action="{{ route('carrito.agregar') }}" method="POST" class="menu-cart-form">
+                      @csrf
+                      <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                      <button type="submit" class="btn-cart-icon" title="Añadir al carrito">
+                        <i class="bi bi-cart-plus"></i>
+                      </button>
+                    </form>
                   </div>
                 </div>
-              @endforeach
+              </div>
             @endforeach
-          @endif
+          @endforeach
         </div>
 
       </div>
@@ -309,5 +283,29 @@
 
 
 </body>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const filterLinks = document.querySelectorAll('.menu-filters li');
+  const items = document.querySelectorAll('.isotope-item');
+
+  filterLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Remove active from all
+      filterLinks.forEach(l => l.classList.remove('filter-active'));
+      this.classList.add('filter-active');
+      const filter = this.getAttribute('data-filter');
+      items.forEach(item => {
+        if (filter === '*' || item.classList.contains(filter.replace('.', ''))) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+</script>
 
 </html>
