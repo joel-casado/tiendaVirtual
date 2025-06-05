@@ -85,6 +85,21 @@ Route::post('/carrito/vaciar', function () {session()->forget('carrito');return 
 
 Route::get('/pago', function () {return view('pago');});
 
+Route::post('/carrito/actualizar', function (\Illuminate\Http\Request $request) {
+    $carrito = session('carrito', []);
+    $id = $request->input('producto_id');
+    $accion = $request->input('accion');
+    if (isset($carrito[$id])) {
+        if ($accion === 'sumar') {
+            $carrito[$id]['cantidad']++;
+        } elseif ($accion === 'restar' && $carrito[$id]['cantidad'] > 1) {
+            $carrito[$id]['cantidad']--;
+        }
+        session(['carrito' => $carrito]);
+    }
+    return redirect()->route('carrito.ver');
+})->name('carrito.actualizar');
+
 Route::post('/carrito/confirmar', function () {
     $comprador = session('comprador');
     $carrito = session('carrito', []);
