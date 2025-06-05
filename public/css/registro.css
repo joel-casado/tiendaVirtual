@@ -1,67 +1,99 @@
 /* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
-    background: url('/images/cocina.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #F8F1E5;
+    min-height: 100vh;
     display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    height: 100vh;
-    margin: 0;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-color);
 }
 
 /* Contenedor del formulario */
-form {
-    background-color: rgba(143, 22, 48, 0.9);  /* Fondo con tono 8F1630 semitransparente */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    width: 420px;
+.registro-container {
+    background: color-mix(in srgb, var(--surface-color), transparent 85%);
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    padding: 40px 32px 28px 32px;
+    max-width: 420px;
+    width: 100%;
+    margin: 40px auto;
 }
 
 /* Título */
-h1 {
-    color: #CDA45E;  /* Tono cálido para el título */
+.registro-title {
+    color: var(--accent-color);
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 18px;
     text-align: center;
-
-    font-size: 16px;
+    letter-spacing: 1px;
 }
 
 /* Etiquetas del formulario */
-form label {
+.registro-form label {
     display: block;
-    margin: 10px 0 5px;
-    font-weight: bold;
+    margin-bottom: 6px;
+    color: var(--heading-color);
+    font-family: var(--nav-font);
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 /* Campos de entrada y textarea */
-form input[type="text"],
-form input[type="email"],
-form input[type="password"],
-form textarea {
-    width: 90%;
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
-    margin-bottom: 10px;
+.registro-form input[type="text"],
+.registro-form input[type="email"],
+.registro-form input[type="password"],
+.registro-form textarea,
+.registro-form button {
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+}
+
+.registro-form input[type="text"],
+.registro-form input[type="email"],
+.registro-form input[type="password"],
+.registro-form textarea {
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    border-radius: 8px;
+    border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+    background: color-mix(in srgb, var(--background-color), transparent 10%);
+    color: var(--default-color);
+    font-size: 1rem;
+    font-family: var(--default-font);
+    transition: border 0.2s;
+    resize: none;
+}
+
+.registro-form input[type="text"]:focus,
+.registro-form input[type="email"]:focus,
+.registro-form input[type="password"]:focus,
+.registro-form textarea:focus {
+    border: 1.5px solid var(--accent-color);
+    outline: none;
 }
 
 /* Estilos para el botón */
-form button {
-    width: 50%;
-    padding: 10px;
-    background-color: #CDA45E;
-    color: #2C2C2C;
+.registro-form button[type="submit"] {
+    background: var(--accent-color);
+    color: var(--contrast-color);
     border: none;
-    border-radius: 4px;
+    border-radius: 50px;
+    padding: 12px 0;
+    font-family: var(--heading-font);
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background 0.2s, color 0.2s;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(205,164,94,0.08);
 }
 
-form button:hover {
-    background-color: #B08A50;
+.registro-form button[type="submit"]:hover {
+    background: #fff;
+    color: var(--accent-color);
+    border: 1.5px solid var(--accent-color);
 }
 
 /* Enlaces */
@@ -73,4 +105,45 @@ a {
 }
 a:hover {
     text-decoration: underline;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.form-actions a {
+    color: var(--accent-color);
+    font-family: var(--nav-font);
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.2s;
+    padding: 8px 0;
+}
+
+.form-actions a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.registro-error {
+    background: color-mix(in srgb, #df1529, transparent 90%);
+    color: #df1529;
+    border-radius: 8px;
+    padding: 10px 0;
+    margin-bottom: 18px;
+    font-weight: 600;
+    text-align: center;
+}
+
+@media (max-width: 500px) {
+    .registro-container {
+        padding: 18px 5px 18px 5px;
+    }
+    .registro-title {
+        font-size: 1.2rem;
+    }
 }

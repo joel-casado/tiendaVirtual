@@ -1,22 +1,22 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Categorias</title>
-    <link rel="stylesheet" href="/css/crearCategoria.css">
+    <title>Categorías</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
-    <body>
-        <h1>Crear categoria</h1>
+<body>
+    <div class="form-crear-container">
+        <div class="form-crear-title">Crear categoría</div>
         @if(session('success'))
             <p style="color: #8F1630;">{{ session('success') }}</p>
         @endif
-        <div class="categoria-container">
-            <form action="{{ url('/crearCategoria') }}" method="POST">
-                @csrf
-                <input type="text" name="nombre_categoria" placeholder="Nombre de la categoría" required>
-                <button type="submit">Crear</button>
-            </form>
-            <p><a href="{{ url('/dashboard') }}">Volver</a></p>
-        </div>
-
-    </body>
+        <form action="{{ url('/crearCategoria') }}" method="POST" class="form-crear-form">
+            @csrf
+            <input type="text" name="nombre_categoria" placeholder="Nombre de la categoría" required>
+            <button type="submit">Crear</button>
+        </form>
+        <a href="{{ url('/dashboard') }}">Volver</a>
+    </div>
+</body>
 </html>

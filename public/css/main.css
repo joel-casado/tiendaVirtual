@@ -1714,9 +1714,474 @@ section,
   background: var(--accent-color);
 }
 
-/*--------------------------------------------------------------
-# Starter Section Section
---------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
+
+
+/* --- Carrito Styles --- */
+.carrito-container {
+  max-width: 700px;
+  margin: 60px auto 40px auto;
+  background: color-mix(in srgb, var(--surface-color), transparent 85%);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+  padding: 40px 30px 30px 30px;
+}
+
+.carrito-title {
+  color: var(--accent-color);
+  font-family: var(--heading-font);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 32px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.carrito-empty {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.carrito-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 28px;
+}
+
+.carrito-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: none;
+}
+
+.carrito-table th, .carrito-table td {
+  padding: 16px 12px;
+  text-align: left;
+  font-size: 1.08rem;
+}
+
+.carrito-table th {
+  color: var(--accent-color);
+  font-family: var(--heading-font);
+  font-weight: 600;
+  border-bottom: 2px solid var(--accent-color);
+  background: none;
+}
+
+.carrito-table td {
+  border-bottom: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.carrito-total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1.2rem;
+  font-family: var(--heading-font);
+  margin: 18px 0 28px 0;
+  gap: 10px;
+}
+
+.carrito-total-amount {
+  color: var(--accent-color);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.carrito-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  margin-bottom: 18px;
+}
+
+.btn-main {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  border: none;
+  border-radius: 50px;
+  padding: 10px 28px;
+  font-family: var(--heading-font);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 0;
+  margin-bottom: 0;
+  box-shadow: 0 2px 8px rgba(205,164,94,0.08);
+}
+
+.btn-main:hover, .btn-main:focus {
+  background: #fff;
+  color: var(--accent-color);
+  border: 1.5px solid var(--accent-color);
+}
+
+.btn-main.btn-outline {
+  background: none;
+  color: var(--accent-color);
+  border: 1.5px solid var(--accent-color);
+}
+
+.btn-main.btn-outline:hover, .btn-main.btn-outline:focus {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.carrito-login-msg {
+  color: #8F1630;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.carrito-back {
+  margin-top: 24px;
+  text-align: left;
+}
+
+.carrito-back a {
+  color: var(--accent-color);
+  font-family: var(--nav-font);
+  font-size: 1rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.carrito-back a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .carrito-container {
+    padding: 18px 5px 18px 5px;
+  }
+  .carrito-title {
+    font-size: 1.3rem;
+  }
+  .carrito-table th, .carrito-table td {
+    padding: 10px 6px;
+    font-size: 0.98rem;
+  }
+  .btn-main {
+    padding: 8px 14px;
+    font-size: 0.95rem;
+  }
+}
+
+/* --- Estilos Pago --- */
+.pago-container {
+  max-width: 500px;
+  margin: 80px auto 40px auto;
+  background: color-mix(in srgb, var(--surface-color), transparent 85%);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+  padding: 40px 30px 30px 30px;
+  text-align: center;
+}
+
+.pago-title {
+  color: var(--accent-color);
+  font-family: var(--heading-font);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  letter-spacing: 1px;
+}
+
+.pago-success-msg {
+  color: #059652;
+  background: color-mix(in srgb, #059652, transparent 90%);
+  border-radius: 8px;
+  padding: 12px 0;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+
+.pago-error-msg {
+  color: #df1529;
+  background: color-mix(in srgb, #df1529, transparent 90%);
+  border-radius: 8px;
+  padding: 12px 0;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+
+.pago-info {
+  color: var(--default-color);
+  font-size: 1.1rem;
+  margin-bottom: 28px;
+}
+
+.pago-form {
+  margin-bottom: 24px;
+}
+
+.pago-back {
+  margin-top: 18px;
+}
+
+.pago-back .btn-main {
+  font-size: 1rem;
+  padding: 8px 24px;
+}
+
+@media (max-width: 600px) {
+  .pago-container {
+    padding: 18px 5px 18px 5px;
+  }
+  .pago-title {
+    font-size: 1.2rem;
+  }
+}
+
+/* --- Pedidos estilo --- */
+.pedidos-container {
+  max-width: 700px;
+  margin: 60px auto 40px auto;
+  background: color-mix(in srgb, var(--surface-color), transparent 85%);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+  padding: 40px 30px 30px 30px;
+}
+
+.pedidos-title {
+  color: var(--accent-color);
+  font-family: var(--heading-font);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 32px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.pedidos-empty {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.pedido-card {
+  background: color-mix(in srgb, var(--surface-color), transparent 92%);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 28px 22px 18px 22px;
+  margin-bottom: 32px;
+  border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 85%);
+}
+
+.pedido-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.pedido-header h3 {
+  font-size: 1.2rem;
+  color: var(--heading-color);
+  margin: 0;
+  font-family: var(--heading-font);
+}
+
+.pedido-estado {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 4px 16px;
+  border-radius: 50px;
+  background: color-mix(in srgb, var(--accent-color), transparent 85%);
+  color: var(--accent-color);
+  text-transform: capitalize;
+  border: 1px solid var(--accent-color);
+}
+
+.pedido-estado.entregado,
+.pedido-estado.completado {
+  background: #05965222;
+  color: #059652;
+  border-color: #059652;
+}
+
+.pedido-estado.pendiente {
+  background: #cda45e22;
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.pedido-estado.cancelado {
+  background: #df152922;
+  color: #df1529;
+  border-color: #df1529;
+}
+
+.pedido-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: var(--default-color);
+}
+
+.pedido-productos h4 {
+  color: var(--accent-color);
+  font-size: 1.08rem;
+  margin-bottom: 8px;
+  font-family: var(--heading-font);
+}
+
+.pedido-productos ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pedido-productos li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+  padding: 4px 0;
+  color: var(--default-color);
+}
+
+.producto-nombre {
+  font-weight: 600;
+  color: var(--heading-color);
+  font-family: var(--heading-font);
+}
+
+.producto-cantidad {
+  font-style: italic;
+  color: var(--accent-color);
+}
+
+.producto-total {
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.pedido-actions {
+  margin-top: 16px;
+  text-align: right;
+}
+
+.pedidos-back {
+  margin-top: 24px;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .pedidos-container {
+    padding: 18px 5px 18px 5px;
+  }
+  .pedidos-title {
+    font-size: 1.2rem;
+  }
+  .pedido-card {
+    padding: 16px 6px 12px 6px;
+  }
+  .pedido-header h3 {
+    font-size: 1rem;
+  }
+}
+
+/* --- Crear Categoria & Crear Producto Styles --- */
+.form-crear-container {
+  background: color-mix(in srgb, var(--surface-color), transparent 85%);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+  padding: 40px 32px 32px 32px;
+  max-width: 420px;
+  width: 100%;
+  margin: 60px auto 40px auto;
+  text-align: center;
+}
+
+.form-crear-title {
+  color: var(--accent-color);
+  font-family: var(--heading-font);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 22px;
+  letter-spacing: 1px;
+}
+
+.form-crear-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-crear-form input[type="text"],
+.form-crear-form input[type="number"],
+.form-crear-form input[type="file"],
+.form-crear-form input[type="email"],
+.form-crear-form input[type="password"],
+.form-crear-form textarea,
+.form-crear-form select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+  background: color-mix(in srgb, var(--background-color), transparent 10%);
+  color: var(--default-color);
+  font-size: 1rem;
+  font-family: var(--default-font);
+  transition: border 0.2s;
+  margin-bottom: 0;
+}
+
+.form-crear-form input[type="text"]:focus,
+.form-crear-form input[type="number"]:focus,
+.form-crear-form input[type="email"]:focus,
+.form-crear-form input[type="password"]:focus,
+.form-crear-form textarea:focus,
+.form-crear-form select:focus {
+  border: 1.5px solid var(--accent-color);
+  outline: none;
+}
+
+.form-crear-form button[type="submit"] {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  border: none;
+  border-radius: 50px;
+  padding: 12px 0;
+  font-family: var(--heading-font);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(205,164,94,0.08);
+}
+
+.form-crear-form button[type="submit"]:hover {
+  background: #fff;
+  color: var(--accent-color);
+  border: 1.5px solid var(--accent-color);
+}
+
+.form-crear-container a {
+  color: var(--accent-color);
+  font-family: var(--nav-font);
+  font-size: 1rem;
+  text-decoration: none;
+  transition: color 0.2s;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.form-crear-container a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+  .form-crear-container {
+    padding: 18px 5px 18px 5px;
+  }
+  .form-crear-title {
+    font-size: 1.2rem;
+  }
 }

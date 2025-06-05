@@ -79,7 +79,6 @@
 
             @else
                 <a class="btn-book-a-table d-none d-xl-block" href="{{ url('/login') }}">Iniciar sesión</a>
-                <a class="btn-book-a-table d-none d-xl-block" href="{{ url('/registroComprador') }}">Registrarse</a>
             @endif
         </div>
 
@@ -156,61 +155,93 @@
     <!-- Final Sobre Nosotros -->
 
     <!-- Seccion Menu -->
+
     <section id="menu" class="menu section">
 
-    <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-aos="fade-up">
         <h2>MENÚ</h2>
         <p>Explora nuestras categorías y platos</p>
-    </div>
-    @if(session('success'))
-        <div style="color: green; margin: 10px 0;">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    <!-- Listado de categorías como botones -->
-      <div class="container d-flex flex-wrap gap-3 justify-content-center my-5">
-          @foreach($categorias as $categoria)
-              <a href="{{ route('categoria.ver', $categoria->id) }}"
-                class="btn-book-a-table d-inline-block px-4 py-3"
-                style="font-size: 1.2rem; border-radius: 12px; text-transform: uppercase;">
-                  {{ $categoria->nombre_categoria }}
-              </a>
-          @endforeach
       </div>
 
-      <!-- Mostrar productos solo si se ha seleccionado una categoría -->
-      @if(isset($categoriaSeleccionada))
-          <div class="container section-title" data-aos="fade-up">
-              <h2>{{ $categoriaSeleccionada->nombre_categoria }}</h2>
-          </div>
-
-          <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
-              @forelse($categoriaSeleccionada->productos as $producto)
-                  <div class="col-lg-6 menu-item isotope-item">
-                      <img src="{{ asset('storage/' . $producto->imagen) }}" class="menu-img" alt="{{ $producto->nombre_producto }}">
-                      <div class="menu-content">
-                          <a href="#">{{ $producto->nombre_producto }}</a>
-                          <span>{{ number_format($producto->precio, 2) }}€</span>
-                      </div>
-                      <div class="menu-ingredients">
-                          {{ $producto->descripcion }}
-                      </div>
-                      <form action="{{ route('carrito.agregar') }}" method="POST" style="margin-top: 10px;">
-                            @csrf
-                            <input type="hidden" name="producto_id" value="{{ $producto->id }}">
-                            <button type="submit" class="btn-book-a-table d-none d-xl-block">Añadir al carrito</button>
-                        </form>
-
-                  </div>
-              @empty
-                  <p>No hay productos en esta categoría.</p>
-              @endforelse
-          </div>
+      @if(session('success'))
+        <div style="color: green; margin: 10px 0;">
+          {{ session('success') }}
+        </div>
       @endif
 
+      <div class="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
+        <!-- Filtros Menú -->
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-12 d-flex justify-content-center">
+            <ul class="menu-filters isotope-filters">
+              <li data-filter="*" class="{{ !isset($categoriaSeleccionada) ? 'filter-active' : '' }}">
+                <a href="#" style="font-family: 'Playfair Display', serif;">Todos</a>
+              </li>
+              @foreach($categorias as $categoria)
+                <li data-filter=".filter-cat-{{ $categoria->id }}" class="{{ (isset($categoriaSeleccionada) && $categoriaSeleccionada->id === $categoria->id) ? 'filter-active' : '' }}">
+                  <a href="{{ route('categoria.ver', $categoria->id) }}" style="font-family: 'Playfair Display', serif;">
+                    {{ $categoria->nombre_categoria }}
+                  </a>
+                </li>
+              @endforeach
+            </ul>
+          </div>
+        </div>
+
+        <!-- Items Menú-->
+        <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
+          @if(isset($categoriaSeleccionada))
+            @forelse($categoriaSeleccionada->productos as $producto)
+              <div class="col-lg-6 menu-item isotope-item filter-cat-{{ $categoriaSeleccionada->id }}">
+                <img src="{{ asset('storage/' . $producto->imagen) }}" class="menu-img" alt="{{ $producto->nombre_producto }}">
+                <div class="menu-content">
+                  <a href="#" style="font-family: 'Playfair Display', serif;">{{ $producto->nombre_producto }}</a>
+                  <span>{{ number_format($producto->precio, 2) }}€</span>
+                  <form action="{{ route('carrito.agregar') }}" method="POST" class="ms-3 d-inline">
+                    @csrf
+                    <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                    <button type="submit" class="btn-cart-icon" title="Añadir al carrito">
+                      <i class="bi bi-cart-plus"></i>
+                    </button>
+                  </form>
+                </div>
+                <div class="menu-ingredients">
+                  {{ $producto->descripcion }}
+                </div>
+              </div>
+            @empty
+              <p>No hay productos en esta categoría.</p>
+            @endforelse
+          @else
+            @foreach($categorias as $categoria)
+              @foreach($categoria->productos as $producto)
+                <div class="col-lg-6 menu-item isotope-item filter-cat-{{ $categoria->id }}">
+                  <img src="{{ asset('storage/' . $producto->imagen) }}" class="menu-img" alt="{{ $producto->nombre_producto }}">
+                  <div class="menu-content">
+                    <a href="#" style="font-family: 'Playfair Display', serif;">{{ $producto->nombre_producto }}</a>
+                    <span>{{ number_format($producto->precio, 2) }}€</span>
+                    <form action="{{ route('carrito.agregar') }}" method="POST" class="ms-3 d-inline">
+                      @csrf
+                      <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                      <button type="submit" class="btn-cart-icon" title="Añadir al carrito">
+                        <i class="bi bi-cart-plus"></i>
+                      </button>
+                    </form>
+                  </div>
+                  <div class="menu-ingredients">
+                    {{ $producto->descripcion }}
+                  </div>
+                </div>
+              @endforeach
+            @endforeach
+          @endif
+        </div>
+
+      </div>
     </section>
+
+    <!-- ...existing code... -->
     <!-- Fin Seccion Menu -->
 
 

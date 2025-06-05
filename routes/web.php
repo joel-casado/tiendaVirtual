@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\AdminEstadisticasController;
+use App\Http\Controllers\AdminPedidosController;
 
 // Ruta para mostrar el formulario de login
 Route::get('/login', [AdministradorController::class, 'showLogin'])->name('login');
@@ -186,3 +188,7 @@ Route::get('/pedido/{id}/pdf', function ($id) {
     return $pdf->download("pedido-{$compra->id}.pdf");
 })->name('pedido.pdf');
 
+Route::get('/estadisticas', [AdminEstadisticasController::class, 'index'])->middleware('auth');
+
+Route::get('/admin/pedidos', [AdminPedidosController::class, 'index'])->name('admin.pedidos');
+Route::post('/admin/pedidos/{id}/enviar', [AdminPedidosController::class, 'marcarEnviada'])->name('admin.pedidos.enviar');

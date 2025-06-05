@@ -1,35 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
     <title>Pagar pedido</title>
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
-<body>
+<body class="pago-page" style="background: var(--background-color); color: var(--default-color); font-family: var(--default-font);">
+    <div class="container pago-container">
+        <h1 class="pago-title">¡Gracias por tu pedido!</h1>
 
-    <h1>¡Gracias por tu pedido!</h1>
+        @if(session('success'))
+            <div class="pago-success-msg">
+                {{ session('success') }}
+            </div>
+        @endif
 
-    @if(session('success'))
-        <p style="color: green;">{{ session('success') }}</p>
-    @endif
+        @if ($errors->any())
+            <div class="pago-error-msg">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
 
-    @if ($errors->any())
-        <div style="color: red;">
-            @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
+        <p class="pago-info">Haz clic en el siguiente botón para completar tu pago:</p>
+
+        <form method="POST" action="{{ route('pago.procesar') }}" class="pago-form">
+            @csrf
+            <button type="submit" class="btn-main">Pagar ahora</button>
+        </form>
+
+        <div class="pago-back">
+            <a href="/" class="btn-main btn-outline">Volver al menú</a>
         </div>
-    @endif
-
-    <p>Haz clic en el siguiente botón para completar tu pago:</p>
-
-    <form method="POST" action="{{ route('pago.procesar') }}">
-        @csrf
-        <button type="submit" class="btn-book-a-table d-none d-xl-block">Pagar ahora</button>
-    </form>
-
-    <br>
-
-    <a href="/" class="btn-book-a-table d-none d-xl-block">Volver al menú</a>
-
+    </div>
 </body>
 </html>

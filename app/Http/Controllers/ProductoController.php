@@ -60,12 +60,11 @@ class ProductoController extends Controller
         }
     }
 
-
     public function index()
     {
-        // Obtener todos los productos con su categoría (opcional)
         $productos = Producto::with('categoria')->get();
-        return view('productos', compact('productos'));
+        $categorias = \App\Models\Categoria::all();
+        return view('productos', compact('productos', 'categorias'));
     }
     public function editar(Request $request)
     {
