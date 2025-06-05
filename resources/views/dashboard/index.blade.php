@@ -195,19 +195,21 @@
             @forelse($categoriaSeleccionada->productos as $producto)
               <div class="col-lg-6 menu-item isotope-item filter-cat-{{ $categoriaSeleccionada->id }}">
                 <img src="{{ asset('storage/' . $producto->imagen) }}" class="menu-img" alt="{{ $producto->nombre_producto }}">
-                <div class="menu-content">
-                  <a href="#" style="font-family: 'Playfair Display', serif;">{{ $producto->nombre_producto }}</a>
-                  <span>{{ number_format($producto->precio, 2) }}€</span>
-                  <form action="{{ route('carrito.agregar') }}" method="POST" class="ms-3 d-inline">
-                    @csrf
-                    <input type="hidden" name="producto_id" value="{{ $producto->id }}">
-                    <button type="submit" class="btn-cart-icon" title="Añadir al carrito">
-                      <i class="bi bi-cart-plus"></i>
-                    </button>
-                  </form>
-                </div>
-                <div class="menu-ingredients">
-                  {{ $producto->descripcion }}
+                <div class="menu-content-flex">
+                    <div class="menu-main">
+                        <a href="#" class="menu-title">{{ $producto->nombre_producto }}</a>
+                        <div class="menu-ingredients">{{ $producto->descripcion }}</div>
+                    </div>
+                    <div class="menu-side">
+                        <span class="menu-price">{{ number_format($producto->precio, 2) }}€</span>
+                        <form action="{{ route('carrito.agregar') }}" method="POST" class="menu-cart-form">
+                            @csrf
+                            <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                            <button type="submit" class="btn-cart-icon" title="Añadir al carrito">
+                                <i class="bi bi-cart-plus"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
               </div>
             @empty
@@ -218,19 +220,21 @@
               @foreach($categoria->productos as $producto)
                 <div class="col-lg-6 menu-item isotope-item filter-cat-{{ $categoria->id }}">
                   <img src="{{ asset('storage/' . $producto->imagen) }}" class="menu-img" alt="{{ $producto->nombre_producto }}">
-                  <div class="menu-content">
-                    <a href="#" style="font-family: 'Playfair Display', serif;">{{ $producto->nombre_producto }}</a>
-                    <span>{{ number_format($producto->precio, 2) }}€</span>
-                    <form action="{{ route('carrito.agregar') }}" method="POST" class="ms-3 d-inline">
-                      @csrf
-                      <input type="hidden" name="producto_id" value="{{ $producto->id }}">
-                      <button type="submit" class="btn-cart-icon" title="Añadir al carrito">
-                        <i class="bi bi-cart-plus"></i>
-                      </button>
-                    </form>
-                  </div>
-                  <div class="menu-ingredients">
-                    {{ $producto->descripcion }}
+                  <div class="menu-content-flex">
+                    <div class="menu-main">
+                      <a href="#" class="menu-title">{{ $producto->nombre_producto }}</a>
+                      <div class="menu-ingredients">{{ $producto->descripcion }}</div>
+                    </div>
+                    <div class="menu-side">
+                      <span class="menu-price">{{ number_format($producto->precio, 2) }}€</span>
+                      <form action="{{ route('carrito.agregar') }}" method="POST" class="menu-cart-form">
+                        @csrf
+                        <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                        <button type="submit" class="btn-cart-icon" title="Añadir al carrito">
+                          <i class="bi bi-cart-plus"></i>
+                        </button>
+                      </form>
+                    </div>
                   </div>
                 </div>
               @endforeach
@@ -240,8 +244,6 @@
 
       </div>
     </section>
-
-    <!-- ...existing code... -->
     <!-- Fin Seccion Menu -->
 
 

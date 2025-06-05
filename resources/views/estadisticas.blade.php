@@ -91,7 +91,7 @@
             </div>
         </div>
         <div class="estadisticas-back">
-            <a href="{{ url('/dashboard') }}">← Volver al panel</a>
+            <a href="{{ url('/dashboard') }}">← Volver</a>
         </div>
     </div>
     <script>

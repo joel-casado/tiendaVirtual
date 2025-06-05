@@ -254,7 +254,7 @@ $(function() {
             </table>
         </div>
         <div style="text-align:center; margin-top:18px;">
-            <a href="{{ url('/dashboard') }}" class="btn-main btn-outline">← Volver al panel</a>
+            <a href="{{ url('/dashboard') }}" class="btn-main btn-outline">← Volver</a>
         </div>
     </div>
 </body>
