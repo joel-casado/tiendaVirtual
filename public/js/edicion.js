@@ -1,57 +1,40 @@
-class ProductoEditor {
-    constructor() {
-        this.init();
-    }
+$(document).ready(function(){
+    $('.btn-editar').click(function(){
+        var productoId = $(this).data('id');
 
-    init() {
-        this.bindEditButtons();
-        this.bindCloseModal();
-        this.bindFormSubmit();
-    }
+        // Obtener los valores de la fila correspondiente:
+        var precio = $(this).closest('tr').find('td:eq(4)').text().trim();
+        var stock = $(this).closest('tr').find('td:eq(5)').text().trim();
+        var destacadoText = $(this).closest('tr').find('td:eq(6)').text().trim();
 
-    bindEditButtons() {
-        $('.btn-editar').on('click', (e) => {
-            const $btn = $(e.currentTarget);
-            const productoId = $btn.data('id');
-            const $row = $btn.closest('tr');
-            const precio = $row.find('td:eq(4)').text().trim();
-            const stock = $row.find('td:eq(5)').text().trim();
-            const destacadoText = $row.find('td:eq(6)').text().trim();
+        // Rellenar el formulario del modal:
+        $('#producto-id').val(productoId);
+        $('#producto-precio').val(precio);
+        $('#producto-stock').val(stock);
+        // Si el texto es "Sí", asigna valor "1"; si es "No", asigna "0"
+        $('#producto-destacado').val( destacadoText === "Sí" ? "1" : "0" );
 
-            $('#producto-id').val(productoId);
-            $('#producto-precio').val(precio);
-            $('#producto-stock').val(stock);
-            $('#producto-destacado').val(destacadoText === "Sí" ? "1" : "0");
+        // Mostrar el modal
+        $('#modal-editar').show();
+    });
 
-            $('#modal-editar').show();
+    $('#cerrar-modal').click(function(){
+        $('#modal-editar').hide();
+    });
+
+    $('#form-editar').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                alert('Producto actualizado correctamente');
+                location.reload();
+            },
+            error: function(error) {
+                alert('Error al actualizar el producto');
+            }
         });
-    }
-
-    bindCloseModal() {
-        $('#cerrar-modal').on('click', () => {
-            $('#modal-editar').hide();
-        });
-    }
-
-    bindFormSubmit() {
-        $('#form-editar').on('submit', (e) => {
-            e.preventDefault();
-            $.ajax({
-                url: $('#form-editar').attr('action'),
-                method: 'POST',
-                data: $('#form-editar').serialize(),
-                success: () => {
-                    alert('Producto actualizado correctamente');
-                    location.reload();
-                },
-                error: () => {
-                    alert('Error al actualizar el producto');
-                }
-            });
-        });
-    }
-}
-
-$(document).ready(function() {
-    new ProductoEditor();
+    });
 });
