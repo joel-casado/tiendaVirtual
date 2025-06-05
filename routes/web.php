@@ -76,7 +76,7 @@ Route::post('/carrito/agregar', function (Request $request) {
 
     session(['carrito' => $carrito]);
 
-    return redirect('/')->with('success', 'Producto añadido al carrito');
+    return redirect('/')->with('success');
 })->name('carrito.agregar');
 
 Route::get('/carrito', function () {$carrito = session('carrito', []);return view('carrito', compact('carrito'));})->name('carrito.ver');
